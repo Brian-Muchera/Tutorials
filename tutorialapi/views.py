@@ -3,12 +3,18 @@ from rest_framework import generics
 from rest_framework import mixins
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated  
+from rest_framework import viewsets
 from .models import Tutorials
 from .serializers import TutorialSerializer
 
 def home(request):
   title ="Welcome"
   return render(request,'tutorialapi/home.html',{"title":title})
+
+class TutorialViewset(viewsets.GenericViewSet,mixins.ListModelMixin,mixins.CreateModelMixin,mixins.UpdateModelMixin,mixins.RetrieveModelMixin, mixins.DestroyModelMixin):
+  queryset = Tutorials.objects.all() 
+  serializer_class = TutorialSerializer
+
 
 class ListTutorialView(generics.GenericAPIView, 
                        mixins.ListModelMixin, 
@@ -22,8 +28,8 @@ class ListTutorialView(generics.GenericAPIView,
   queryset = Tutorials.objects.all() 
   serializer_class = TutorialSerializer
   lookup_field ='pk'
-  authentication_classes = [TokenAuthentication]
-  permission_classes = [IsAuthenticated]
+  # authentication_classes = [TokenAuthentication]
+  # permission_classes = [IsAuthenticated]
   
   def get(self,request,pk=None):
     if pk:
