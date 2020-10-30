@@ -5,7 +5,7 @@ from cloudinary.models import CloudinaryField
 class Tutorials(models.Model):
   tutorial_title = models.CharField(max_length=150)
   description = models.TextField()
-  tutorial_image = models.CloudinaryField('image')
+  tutorial_image = CloudinaryField('image')
   tutorial_content = models.TextField()
   author = models.ForeignKey(User,on_delete=models.CASCADE)
   published = models.BooleanField()
